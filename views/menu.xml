@@ -1,0 +1,71 @@
+<?xml version='1.0'?>
+<odoo>
+    
+    <record id="action_bike_rent" model="ir.actions.act_window">
+        <field name="name">Bike Rent</field>
+        <field name="res_model">bike.rent</field>
+        <field name="view_mode">tree,form</field>
+    </record>
+       
+    <record id="bike_search_view" model="ir.ui.view">
+        <field name="name">Search View</field>
+        <field name="model">bike.rent</field>
+        <field name="arch" type="xml">            
+            <search>
+                <group expand="1" string="Group by ..">
+                    <filter name="name" string="bike_id" domain="[]"
+                     context="{'group_by':'bike_id'}"/>
+                </group>
+                <filter string="Active" name="is_active" 
+                  domain="[('rent_stop', '&gt;', 
+                            context_today().strftime('%Y-%m-%d'))]"/>
+                <filter string="Free rent" name="Filter_price" 
+                 domain="[('price','=','0')]"/>                        
+            </search>
+        </field>    
+    </record>  
+
+    <record id="view_form_bike" model="ir.ui.view">
+        <field name="name">Bike Form</field>      
+        <field name="model">bike.rent</field>
+        <field name="arch" type="xml">
+            <form>
+             <group>
+                <field name="bike_id"/>
+                <field name="partner_id"/>
+                <field name="rent_start"/>
+                <field name="rent_stop"/> 
+                <field name="price"/>
+                <field name="number_of_days"/>
+<!--
+                <field name="manufacturer" attrs="{'invisible':[('is_bike',
+                            '=', False)]}"/>
+                <field name="model" attrs="{'invisible':[('is_bike',
+                            '=', False)]}"/> 
+                            -->               
+             </group>
+            </form>
+        </field>
+    </record>
+             
+    <record  id="view_tree_bike"  model="ir.ui.view">  
+        <field  name="name">Bike Tree</field>  
+        <field  name="model">bike.rent</field>  
+        <field  name="arch"  type="xml">  
+            <tree>  
+                <field  name="bike_id"/> 
+                <field  name="partner_id"/>
+                <field  name="rent_start"/>
+                <field  name="rent_stop"/>  
+                <field  name="price"/>  
+            </tree>  
+        </field>  
+    </record> 
+    
+    
+    <menuitem id="bike_menu"
+          name="Bike Rent"
+          action="action_bike_rent"
+          />
+                   
+</odoo>
