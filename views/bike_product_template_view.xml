@@ -1,26 +1,24 @@
 <?xml version='1.0'?>
 <odoo>
-    <data>
-        <record id="inherited_view" model="ir.ui.view">
-            <field name="name">bike.product.template.inherit</field>
-            <field name="model">bike.product.template</field>
-            <field name="inherit_id" ref="product.product_normal_form_view"/>
-            <field name="arch" type="xml">
-                <xpath expr="//field[@name='name']" position="inside">                
-                    <field name="is_bike"/>                
-                </xpath> 
-                
-    
-                <!--            
-                <xpath expr="//field[@name='bike']" position="after">                
+    <record id="inherited_view" model="ir.ui.view">
+        <field name="name">bike.product.template.inherit</field>
+        <field name="model">bike.product.template</field>
+        <field name="inherit_id" ref="product.product_normal_form_view"/>
+        <field name="arch" type="xml">
+            <xpath expr="//field[@name='name']" position="inside">                
+                <field name="is_bike"/>                
+            </xpath> 
+
+
+            <!--            
+            <xpath expr="//field[@name='bike']" position="after">                
+            <field name="is_bike"/>
+
+            <field name="is_bike" postion="after">
                 <field name="is_bike"/>
-                
-                <field name="is_bike" postion="after">
-                    <field name="is_bike"/>
-                </field>
-    
-                -->
-            </field>    
-        </record>  
-    </data>             
+            </field>
+
+            -->
+        </field>    
+    </record>             
 </odoo>
