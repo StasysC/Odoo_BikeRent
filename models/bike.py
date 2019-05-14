@@ -1,55 +1,51 @@
-# -*- coding: utf-8 -*-
 """
-Bike rent module for odoo
+This file is part of Odoo. The COPYRIGHT file at the top level of
+this module contains the full copyright notices and license terms.
 """
-import pdb
-from datetime import datetime
 from odoo import models, fields, api
-from odoo import exceptions
+
 
 class BikeRent(models.Model):
     """
-    Versada module
+    Defining custom fields on module
     """
     _name = 'bike.rent'
     _description = 'Bike'
-    _inherit_ = 'product.template'
-    partner_id = fields.Many2one('res.partner')
-    bike_id = fields.Many2one('bike.product.template')
-    price = fields.Float()
-    rent_start = fields.Date(required=True)
-    rent_stop = fields.Date(required=True)
-    notes = fields.Char()
-    number_of_days = fields.Integer(compute='get_number_of_days')
+    partner_id = fields.Many2one('res.partner', string='Partner')
+    bike_id = fields.Many2one('product.product', string='Bike')
+    price = fields.Float(string='Price')
+    rent_start = fields.Date(string='Rent start', required=True)
+    rent_stop = fields.Date(string='Rent stop', required=True)
+    notes = fields.Char(string='Notes')
+    _compute_number_of_days = fields.Integer(string='Number of days',
+                                    compute='get_number_of_days')   
     
-    manufacturer = fields.Char()
-    model = fields.Char()
-        
+    @api.multi
+    @api.depends('rent_stop', 'rent_start')
     def get_number_of_days(self):
-#        pdb.set_trace()
-        rent_duration = self.rent_stop - self.rent_start
-        self.number_of_days = rent_duration.days         
+        """
+        Passes the difference between rent end and start dates
+        to _compute_number_of_days variable
+        """
+        for record in self:
+            try:
+                rent_duration = record.rent_stop - record.rent_start            
+                record._compute_number_of_days = rent_duration.days
+            except (AttributeError, TypeError):
+                pass
     
-    @api.onchange('rent_start', 'rent_stop')
-    def days_for_rent(self):
+    @api.onchange('_compute_number_of_days')        
+    def days_is_negative(self):
         """
-        Calculates and shows days bike has been booked for
+        If number of days are negative, clears rent_stop and 
+        _compute_number_of_days fields
         """
-        try:
-            rent_duration = self.rent_stop - self.rent_start
-            if rent_duration.days >= 0:                
-                self.get_number_of_days()
-            else:
-                self.number_of_days = False
-                self.rent_stop = False
-                return {
-                    'warning': {
-                        'title': 'Wrong end date!',
-                        'message': '"Rent stop" date cannot be before "Rent start" date',
-                        }
+        if self._compute_number_of_days < 0:                
+            self._compute_number_of_days = False
+            self.rent_stop = False
+            return {
+                'warning': {
+                    'title': 'Wrong end date!',
+                    'message': '"Rent stop" date cannot be before "Rent start" date',
                     }
-        except AttributeError:
-            pass
-        except TypeError:
-            pass
-            
+                }

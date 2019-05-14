@@ -1,6 +1,6 @@
 
 {
-    'name': 'bike_rent',
+    'name': 'Bike_rent',
     'description': """Module for Versada task 1""",
     'author': 'Stasys Civilis',
     'depends': ['product'],
@@ -9,6 +9,6 @@
     'data': [
         'security/ir.model.access.csv',
         'views/menu.xml',
-        'views/bike_product_template_view.xml',
+        'views/inherit_views.xml',
         ],
 }

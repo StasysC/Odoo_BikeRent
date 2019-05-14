@@ -2,13 +2,11 @@
 <odoo>
     
     <record id="action_bike_rent" model="ir.actions.act_window">
-        <field name="name">Bike Rent</field>
         <field name="res_model">bike.rent</field>
         <field name="view_mode">tree,form</field>
     </record>
-       
+           
     <record id="bike_search_view" model="ir.ui.view">
-        <field name="name">Search View</field>
         <field name="model">bike.rent</field>
         <field name="arch" type="xml">            
             <search>
@@ -25,43 +23,34 @@
         </field>    
     </record>  
 
-    <record id="view_form_bike" model="ir.ui.view">
-        <field name="name">Bike Form</field>      
+    <record id="view_form_bike" model="ir.ui.view">    
         <field name="model">bike.rent</field>
         <field name="arch" type="xml">
             <form>
-             <group>
-                <field name="bike_id"/>
-                <field name="partner_id"/>
-                <field name="rent_start"/>
-                <field name="rent_stop"/> 
-                <field name="price"/>
-                <field name="number_of_days"/>
-<!--
-                <field name="manufacturer" attrs="{'invisible':[('is_bike',
-                            '=', False)]}"/>
-                <field name="model" attrs="{'invisible':[('is_bike',
-                            '=', False)]}"/> 
-                            -->               
-             </group>
+                <group>
+                    <field name="bike_id" domain="[('is_bike','=', True)]"/>                
+                    <field name="partner_id"/>
+                    <field name="rent_start"/>
+                    <field name="rent_stop"/> 
+                    <field name="price"/>
+                    <field name="_compute_number_of_days"/>            
+                </group>
             </form>
         </field>
     </record>
              
-    <record  id="view_tree_bike"  model="ir.ui.view">  
-        <field  name="name">Bike Tree</field>  
-        <field  name="model">bike.rent</field>  
-        <field  name="arch"  type="xml">  
-            <tree>  
+    <record  id="view_tree_bike"  model="ir.ui.view">   
+        <field name="model">bike.rent</field>
+        <field name="arch"  type="xml"> 
+            <tree>                            
                 <field  name="bike_id"/> 
                 <field  name="partner_id"/>
                 <field  name="rent_start"/>
                 <field  name="rent_stop"/>  
                 <field  name="price"/>  
-            </tree>  
+            </tree>            
         </field>  
-    </record> 
-    
+    </record>   
     
     <menuitem id="bike_menu"
           name="Bike Rent"
