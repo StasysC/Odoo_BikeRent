@@ -28,8 +28,11 @@
                        position="before">
                     <button class="eo_inline oe_stat_button" 
                             name="current_user_rents"
-                            string="Client rents" type="object"
-                            icon="fa-anchor"/>
+                            type="object"
+                            icon="fa-anchor">
+                        <field name="_compute_rent_count" widget="statinfo" string="Rents"/>
+                    </button>                     
+                                                      
                 </xpath>
             </div>
         </field>    
