@@ -10,6 +10,7 @@ class BikeRent(models.Model):
     Defining custom fields on module
     """
     _name = 'bike.rent'
+    _inherit = 'mail.thread'
     _description = 'Bike'
     partner_id = fields.Many2one('res.partner', string='Partner')
     bike_id = fields.Many2one('product.product', string='Bike')
