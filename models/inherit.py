@@ -30,15 +30,16 @@ class UserRent(models.Model):
     def get_rent_count(self):
         data_obj = self.env['bike.rent']
         print("*****************************************")
-        print(data_obj.id)
+        print(data_obj.partner_id.name)
         print("*****************************************")
 
         for record in self:
+
             print("*****************************************")
 #            record._compute_rent_count = data_obj.search_count(['record.active', '=', True])
-#            record._compute_rent_count = data_obj.search_count(['record.active', '=', True])
-#            list_data = data_obj.search(['record.name', '=', 'partner_id'])
-#            print(list_data)
+            record._compute_rent_count = data_obj.search_count(['record.name', '=', data_obj.partner_id])
+#            list_data = data_obj.search(['record.name', '=', data_obj.partner_id])
+#            print(len(list_data))
             print("*****************************************")
     
 class Chatter(models.Model):
