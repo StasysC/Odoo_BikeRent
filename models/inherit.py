@@ -37,8 +37,8 @@ class UserRent(models.Model):
             print("*****************************************")
 #            record._compute_rent_count = data_obj.search_count(['record.active', '=', True])
 #            record._compute_rent_count = data_obj.search_count(['record.active', '=', True])
-            list_data = data_obj.search(['record.name', '=', 'partner_id'])
-            print(list_data)
+#            list_data = data_obj.search(['record.name', '=', 'partner_id'])
+#            print(list_data)
             print("*****************************************")
     
 class Chatter(models.Model):
