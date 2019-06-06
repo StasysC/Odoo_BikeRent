@@ -30,12 +30,29 @@
                             name="current_user_rents"
                             type="object"
                             icon="fa-anchor">
-                        <field name="_compute_rent_count" widget="statinfo" string="Rents"/>
-                    </button>                     
-                                                      
+                        <field name="_compute_rent_count"
+                               widget="statinfo" 
+                               string="Rents"/>
+                    </button>                       
                 </xpath>
             </div>
         </field>    
     </record>
-
+<!--  
+    <record id="quotation_view" model="ir.ui.view">
+        <field name="model">sale.order</field>
+        <field name="inherit_id" ref="sale.view_order_form"/>
+        <field name="arch" type="xml">  
+            <div name="button_box">
+                <xpath expr="//field[@name='price_unit']"
+                       position="before">  
+                       <group>                                          
+                           <field name="rent_start"/>                       
+                           <field name="rent_stop"/>
+                       </group>
+                </xpath>
+            </div>  
+        </field>
+    </record>
+-->  
 </odoo>

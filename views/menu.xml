@@ -1,11 +1,22 @@
 <?xml version='1.0'?>
 <odoo>
-    
+    <!-- Actions -->
     <record id="action_bike_rent" model="ir.actions.act_window">
+        <field name="name">action.bike.rent</field>
         <field name="res_model">bike.rent</field>
         <field name="view_mode">tree,form,pivot</field>
+        <field name="context">{"search_default_is_active":1}</field>
     </record>
-           
+  
+    <record id="action_quotations" model="ir.actions.act_window">
+        <field name="name">action.quotation</field>
+        <field name="res_model">sale.order</field>
+        <field name="view_mode">tree,kanban,form,calendar,pivot,graph,activity</field>
+        <field name="view_id" ref="sale.view_quotation_tree"/>
+        <field name="context"></field>
+    </record>
+    
+    <!-- Views -->           
     <record id="bike_search_view" model="ir.ui.view">
         <field name="model">bike.rent</field>
         <field name="arch" type="xml">            
@@ -25,38 +36,44 @@
  
     <record id="view_form_bike" model="ir.ui.view">    
         <field name="model">bike.rent</field>
-        <field name="arch" type="xml">    
-            <sheet> 
-            <notebook>
+        <field name="arch" type="xml">   
+ 
+            <form create="false" edit="false">
+               <sheet> 
+                <notebook>
                     <page string="Form">
-                        <form>
                             <group>
-                                <field name="bike_id" domain="[('is_bike','=', True)]"/>                
+                                <field name="bike_id"
+                                       domain="[('is_bike','=', True)]"
+                                       options="{'no_create': True}"/>                
                                 <field name="partner_id"/>
                                 <field name="rent_start"/>
                                 <field name="rent_stop"/> 
                                 <field name="price"/>
                                 <field name="_compute_number_of_days"/>            
-                            </group>
-                        </form>
+                            </group>                    
                     </page>
                     <page string="Backwards connection">
                     
                     </page>
-            </notebook>
-            </sheet> 
-                <div class="oe_chatter">
-                    <field name="message_follower_ids" widget="mail_follower"/>
-                    <field name="message_ids" widget="mail_thread"/>         
-                </div>                        
-                       
+                </notebook>
+                
+                </sheet> 
+                    <div class="oe_chatter">
+                        <field name="message_follower_ids" widget="mail_follower"/>
+                        <field name="message_ids" widget="mail_thread"/>         
+                    </div>   
+            </form>                
         </field>
     </record>
             
     <record  id="view_tree_bike" model="ir.ui.view">   
         <field name="model">bike.rent</field>
         <field name="arch" type="xml"> 
-            <tree>                            
+            <tree decoration-muted="rent_stop &lt; today"  
+                  decoration-success="(current_date &gt;= rent_start) 
+                                      and (current_date &lt;= rent_stop)"> 
+                <field name="today" invisible="1"/>          
                 <field name="bike_id"/> 
                 <field name="partner_id"/>
                 <field name="rent_start"/>
@@ -66,7 +83,7 @@
                       
         </field>  
     </record>
-    
+
     <record  id="view_pivot_bike" model="ir.ui.view">   
         <field name="model">bike.rent</field>
         <field name="arch" type="xml"> 
@@ -78,10 +95,19 @@
             </pivot>            
         </field>  
     </record>
- 
+    
+
+
+    <!-- Menu items --> 
     <menuitem id="bike_menu"
           name="Bike Rent"
           action="action_bike_rent"
+          />
+          
+    <menuitem id="quotations_menu"
+          parent="bike_menu"
+          name="Quotations"
+          action="action_quotations"
           />
                    
 </odoo>

@@ -3,7 +3,7 @@ This file is part of Odoo. The COPYRIGHT file at the top level of
 this module contains the full copyright notices and license terms.
 """
 from odoo import models, fields, api
-
+from datetime import datetime
 
 class BikeRent(models.Model):
     """
@@ -18,8 +18,23 @@ class BikeRent(models.Model):
     rent_start = fields.Date(string='Rent start', required=True)
     rent_stop = fields.Date(string='Rent stop', required=True)
     notes = fields.Char(string='Notes')
+    today = fields.Date(default=datetime.today().strftime('%Y-%m-%d'))
     _compute_number_of_days = fields.Integer(string='Number of days',
-                                    compute='get_number_of_days')   
+                                    compute='get_number_of_days')    
+    
+#    @api.multi
+#    @api.depends ('rent_stop')
+#    def set_color(self):
+#        today = datetime.today().strftime('%Y-%m-%d')
+#        for record in self:
+#            if str(record.rent_stop) < today:
+#                record.color = "grey"
+#            elif str(record.rent_start) < today and str(record.rent_stop) > today:
+#                record.color = "green"
+#            else:
+#                record.color = "neveikia"
+#
+#            
     
     @api.multi
     @api.depends('rent_stop', 'rent_start')
@@ -50,3 +65,4 @@ class BikeRent(models.Model):
                     'message': '"Rent stop" date cannot be before "Rent start" date',
                     }
                 }
+    
