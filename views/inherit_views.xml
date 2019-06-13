@@ -22,23 +22,15 @@
     <record id="user_normal_form_view" model="ir.ui.view">
         <field name="model">res.partner</field>
         <field name="inherit_id" ref="base.view_partner_form"/>
-        <field name="arch" type="xml">            
-            <div name="button_box">
-                <xpath expr="//button[@name='schedule_meeting']"
-                       position="before">
-                    <button class="eo_inline oe_stat_button" 
-                            name="current_user_rents"
-                            type="object"
-                            icon="fa-anchor">
-                        <field name="_compute_rent_count"
-                               widget="statinfo" 
-                               string="Rents"/>
-                    </button>                       
-                </xpath>
-            </div>
+        <field name="arch" type="xml">
+            <notebook>
+            <page string="Usage">                          
+                <field name="backwards"/>
+            </page>
+            </notebook>
         </field>    
     </record>
-<!--  
+
     <record id="quotation_view" model="ir.ui.view">
         <field name="model">sale.order</field>
         <field name="inherit_id" ref="sale.view_order_form"/>
@@ -47,12 +39,11 @@
                 <xpath expr="//field[@name='price_unit']"
                        position="before">  
                        <group>                                          
-                           <field name="rent_start"/>                       
-                           <field name="rent_stop"/>
+                           <field name="rent_duration"/>                       
                        </group>
                 </xpath>
             </div>  
         </field>
     </record>
--->  
+ 
 </odoo>

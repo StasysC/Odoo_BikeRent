@@ -12,13 +12,16 @@ class BikeRent(models.Model):
     _name = 'bike.rent'
     _inherit = 'mail.thread'
     _description = 'Bike'
-    partner_id = fields.Many2one('res.partner', string='Partner')
+    partner_id = fields.Many2one(comodel_name='res.partner',
+                                 string='Partner',
+                                 select=True)
     bike_id = fields.Many2one('product.product', string='Bike')
     price = fields.Float(string='Price')
     rent_start = fields.Date(string='Rent start', required=True)
     rent_stop = fields.Date(string='Rent stop', required=True)
     notes = fields.Char(string='Notes')
     today = fields.Date(default=datetime.today().strftime('%Y-%m-%d'))
+
     _compute_number_of_days = fields.Integer(string='Number of days',
                                     compute='get_number_of_days')    
     

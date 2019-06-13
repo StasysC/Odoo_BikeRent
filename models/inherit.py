@@ -1,5 +1,6 @@
 
 from odoo import models, fields, api
+from datetime import datetime, timedelta
 
 class BikeProductTemplate(models.Model):
     _inherit = 'product.product'
@@ -12,6 +13,8 @@ class UserRent(models.Model):
     _inherit = 'res.partner'
     _compute_rent_count = fields.Integer(compute='get_rent_count')
     partner_ids = fields.One2many('bike.rent', 'partner_id')
+    backwards = fields.One2many(comodel_name='bike.rent',
+                                inverse_name='partner_id')
 
     def current_user_rents(self):
         return {
@@ -40,15 +43,23 @@ class account_invoice(models.Model):
         bike_rent_obj = self.env['sale.order']
         self.return_date = bike_rent_obj.rent_stop
 
-class sale_order(models.Model):
+class SaleOrder(models.Model):
     _inherit = 'sale.order'
   
     rent_start = fields.Date(string='Rent start', required=True)
     rent_stop = fields.Date(string='Rent stop', required=True)
+    rent_duration = fields.Integer(string='Rent duration')
     
     @api.multi
+    @api.depends('rent_duration')
+    def rent_dates(self):
+        for record in self:
+            record.rent_start = datetime.today().strftime('%Y-%m-%d')
+            record.rent_stop = record.rent_start + timedelta(record.rent_duration)
+        
+    @api.multi
     def action_confirm(self):
-
+        self.rent_dates()
         def filter_rests(record):
             return record.product_id.is_bike and record.product_id.type == 'service'
                    
@@ -60,4 +71,4 @@ class sale_order(models.Model):
                 'partner_id': record.order_partner_id.id,
                 'bike_id': record.product_id.id,
             })
-        return super(sale_order, self).action_confirm()
+        return super(SaleOrder, self).action_confirm()

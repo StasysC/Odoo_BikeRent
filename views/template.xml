@@ -1,0 +1,10 @@
+<odoo>
+    <template id="quotation_report_template" inherit_id="sale.report_saleorder_document">
+        <xpath expr="//div[@class='row mt32 mb32']//div[2]" position="after">
+                <div>
+                    <strong>Bike return:</strong>
+                    <p class="m-0"><t t-esc="doc.rent_stop"/></p>   
+                </div>
+        </xpath>
+    </template>  
+</odoo>
