@@ -1,4 +1,3 @@
 id,name,model_id:id,group_id:id,perm_read,perm_write,perm_create,perm_unlink
 access_bike_rent,access_bike_rent,model_bike_rent,base.group_user,1,1,1,1
-access_bike_product_template,access_bike_product_template,model_bike_product_template,base.group_user,1,1,1,1 
-access_user_chatter,access_user_chatter,model_user_chatter,base.group_user,1,1,1,1
+

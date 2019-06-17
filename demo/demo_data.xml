@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data > 
+    
+       <record id="t1" model="product.product">
+            <field name="is_bike" eval="True"/>
+            <field name="name">Boom</field>
+        </record>
+
+       <record id="t2" model="product.product">
+            <field name="is_bike" eval="True"/>
+            <field name="name">Boom2</field>
+        </record>
+        
+       <record id="t3" model="product.product">
+            <field name="is_bike" eval="True"/>
+            <field name="name">Boom3</field>
+        </record>
+           
+        <record id="demo_data1" model="bike.rent">
+            <field name="price">555</field>
+            <field name="rent_start">2019-05-06</field>
+            <field name="rent_stop">2019-05-25</field>
+            <field name="partner_id" ref="base.res_partner_2"/>
+            <field name="bike_id" ref="t1"/>           
+        </record>
+
+        <record id="demo_data2" model="bike.rent">
+            <field name="price">250</field>
+            <field name="rent_start">2019-05-06</field>
+            <field name="rent_stop">2019-05-21</field>
+            <field name="partner_id" ref="base.res_partner_3"/>
+            <field name="bike_id" ref="t2"/>           
+        </record>        
+
+        <record id="demo_data3" model="bike.rent">
+            <field name="price">3345</field>
+            <field name="rent_start">2019-05-09</field>
+            <field name="rent_stop">2019-05-28</field>
+            <field name="partner_id" ref="base.res_partner_4"/>
+            <field name="bike_id" ref="t3"/>           
+        </record>        
+        
+
+    </data>
+</odoo>
